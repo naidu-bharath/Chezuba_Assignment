@@ -1,0 +1,83 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="line-scale" [fullScreen]="true">
+    <p style="color: rgb(15, 3, 3)"> Please Wait... </p>
+</ngx-spinner>
+
+<mat-tab-group animationDuration="0ms" (selectedTabChange)="display($event)">
+    <mat-tab label="Thirds"> Thirds Details </mat-tab>
+    <mat-tab label="Fifths"> Fifths Details </mat-tab>
+    <mat-tab label="Magic"> Magic Details </mat-tab>
+</mat-tab-group>
+
+
+
+<input type="text" (keyup)="applyFilter($event.target.value)" placeholder="search">
+
+<input type="button" style="float: right;" value="Reset All" class="button" (click)="Reset()">
+
+<div class="example-container mat-elevation-z8">
+
+    <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id</th>
+            <td mat-cell *matCellDef="let element" [innerHTML]="element.id | highlightSearch: filterText">
+                {{element.id}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="Userid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> User Id </th>
+            <td mat-cell *matCellDef="let element" [innerHTML]="element.userId | highlightSearch: filterText">
+                {{element.userId}}
+            </td>
+        </ng-container>
+
+
+
+        <ng-container matColumnDef="Cat">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+            <td mat-cell *matCellDef="let element" [innerHTML]="element.category | highlightSearch: filterText">
+                {{element.category}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="body">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>body</th>
+            <td mat-cell *matCellDef="let element" [innerHTML]="element.body | highlightSearch: filterText">
+                {{element.body}}
+            </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+            <td mat-cell *matCellDef="let element" [innerHTML]="element.title | highlightSearch: filterText">
+                {{element.title}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ope">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Operation </th>
+            <td mat-cell *matCellDef="let element">
+                <i class="fa fa-trash" (click)="Delete(element.id)"></i>
+            </td>
+        </ng-container>
+
+        
+
+        <ng-container matColumnDef="noData">
+            <mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length">
+                <p [hidden]="dataSource && dataSource.data.length > 0">No records found.</p>
+            </mat-footer-cell>
+        </ng-container>
+
+        <mat-footer-row *matFooterRowDef="['noData']" [hidden]="dataSource && dataSource.data.length > 0">
+        </mat-footer-row>
+
+        
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons style="width: 100%;">
+    </mat-paginator>
+</div>
